@@ -40,16 +40,12 @@ public class UserManager implements UserService {
 
 	@Override
 	public Result updateUser(User user ) {
-		if(user.getEmailAddress()==null||user.getName()==null||user.getPassword()==null||user.getTitle()==null) {
 		
-		return new ErrorResult("lütfen bilgiler eksiksiz giriniz. ");
-		}
-		else
-		{
+		
 			userDao.deleteById(user.getId());
 			userDao.save(user);
 			return new SuccessResult("günceleme başarıı");
-		}
+		
 			
 	}
 

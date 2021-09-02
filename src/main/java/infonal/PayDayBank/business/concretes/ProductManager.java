@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import infonal.PayDayBank.business.abstracts.ProductService;
 import infonal.PayDayBank.core.utilitis.results.DataResult;
-import infonal.PayDayBank.core.utilitis.results.ErrorResult;
 import infonal.PayDayBank.core.utilitis.results.Result;
 import infonal.PayDayBank.core.utilitis.results.SuccessDataResult;
 import infonal.PayDayBank.core.utilitis.results.SuccessResult;
@@ -40,16 +39,11 @@ public class ProductManager implements ProductService {
 	
 	@Override
 	public Result updateProduct(Product product) {
-		if(product.getAvailable()==null||product.getDescription()==null|| product.getName()==null||product.getPrice()==0)
-		{
-			return new ErrorResult("lütfen bilgiler eksiksiz giriniz. ");
-		}
-		else
-		{
+		
 			productDao.deleteById(product.getId());
 			productDao.save(product);
 			return new SuccessResult("günceleme başarılı");
-		}
+		
 	}
 	
 	@Override
