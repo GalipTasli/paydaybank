@@ -24,17 +24,20 @@ public class ProductManager implements ProductService {
 		super();
 		this.productDao = productDao;
 	}
+	
 	@Override
 	public DataResult<List<Product>> getall() {
 		
 		return new SuccessDataResult<List<Product>>(this.productDao.findAll());
 	}
+	
 	@Override
 	public Result add(Product product) {
 		
 		 this.productDao.save(product);
 		 return new SuccessResult("ürün eklendi");
 	}
+	
 	@Override
 	public Result updateProduct(Product product) {
 		if(product.getAvailable()==null||product.getDescription()==null|| product.getName()==null||product.getPrice()==0)
