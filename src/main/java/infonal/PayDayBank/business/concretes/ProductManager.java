@@ -52,4 +52,11 @@ public class ProductManager implements ProductService {
 		(this.productDao.findById(productId),"Data listelendi");	
 	}
 
+	@Override
+	public Result delete(int id) {
+		
+		productDao.deleteById(id);
+		return new SuccessResult("silme başarılı");
+	}
+
 }

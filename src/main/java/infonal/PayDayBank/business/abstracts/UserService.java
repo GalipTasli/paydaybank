@@ -12,5 +12,6 @@ public interface UserService {
 	Result add (User user);
 	Result verificationEmailandPassword(String email,String password);
 	Result updateUser( User user);
+	Result delete(int id);
 
 }

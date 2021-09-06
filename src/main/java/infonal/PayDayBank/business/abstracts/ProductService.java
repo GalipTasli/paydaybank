@@ -12,5 +12,6 @@ public interface ProductService {
 	Result add (Product product);
 	Result updateProduct(Product product);
 	DataResult<Product>getByProductId(int productId);
+	Result delete(int id);
 
 }

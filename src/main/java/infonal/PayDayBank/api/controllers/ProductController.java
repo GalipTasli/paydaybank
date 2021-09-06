@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,6 +56,11 @@ public class ProductController {
 	@GetMapping("/getByProducId")
 	public DataResult<Product> getByProductId(@RequestParam int productId){
 		return this.productService.getByProductId(productId);
+	}
+	@DeleteMapping("/delete")
+	public Result delete(@RequestParam int id)
+	{
+		return this.productService.delete(id);
 	}
 
 }

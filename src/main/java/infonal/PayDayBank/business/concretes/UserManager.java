@@ -70,6 +70,12 @@ public class UserManager implements UserService {
 	public DataResult<User> getByUserId(int id) {
 		return new SuccessDataResult<User>(this.userDao.findById(id),"data listelendi");
 	}
+
+	@Override
+	public Result delete(int id) {
+		userDao.deleteById(id);
+		return new SuccessResult("silme başarılı");
+	}
 	
 
 
