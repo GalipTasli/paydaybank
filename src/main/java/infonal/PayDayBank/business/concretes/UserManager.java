@@ -1,6 +1,7 @@
 package infonal.PayDayBank.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,8 @@ import infonal.PayDayBank.core.utilitis.results.SuccessDataResult;
 import infonal.PayDayBank.core.utilitis.results.SuccessResult;
 import infonal.PayDayBank.dataAccess.abstracts.UserDao;
 import infonal.PayDayBank.entities.concretes.User;
-
+import infonal.PayDayBank.entities.dtos.UserDto;
+import infonal.PayDayBank.entities.dtos.Verification;
 
 @Service
 public class UserManager implements UserService {
@@ -23,52 +25,52 @@ public class UserManager implements UserService {
 	public UserManager(UserDao userDao) {
 		super();
 		this.userDao = userDao;
+
 	}
 
 	@Override
-	public DataResult<List<User>> getall() {
-		
-		return new SuccessDataResult<List<User>>(this.userDao.findAll(),"data listelendi");
+	public DataResult<List<UserDto>> getall() {
+
+		List<UserDto> userdto = ((List<User>) userDao.findAll()).stream().map(this::convertToUserDto)
+				.collect(Collectors.toList());
+		return new SuccessDataResult<List<UserDto>>(userdto, "data listelendi");
+
 	}
 
 	@Override
-	public Result add(User user) {
-		
-		this.userDao.save(user);
-		return new  SuccessResult("kayıt başarılı");
+	public Result add(UserDto userDto) {
+
+		this.userDao.save(convertToUser(userDto));
+		return new SuccessResult("kayıt başarılı");
 	}
 
 	@Override
-	public Result updateUser(User user ) {
-		
-		
-			userDao.deleteById(user.getId());
-			userDao.save(user);
-			return new SuccessResult("günceleme başarıı");
-		
-			
+	public Result updateUser(UserDto userDto) {
+
+		userDao.deleteById(convertToUser(userDto).getId());
+		userDao.save(convertToUser(userDto));
+		return new SuccessResult("günceleme başarıı");
+
 	}
 
 	@Override
-	public Result verificationEmailandPassword(String email, String password)
-	{
-		
-		if(userDao.findByEmailAddressAndPassword(email, password)!=null)
-		{
+	public Result verificationEmailandPassword(Verification verification) {
+
+		if (userDao.findByEmailAddressAndPassword(convertToUser(verification).getEmailAddress(),
+				convertToUser(verification).getPassword()) != null) {
 			return new SuccessResult("kayıt bulundu");
-		}
-		else
-		{
+		} else {
 			return new ErrorResult("kayıt bulunamadı");
 		}
-		
 
-		
 	}
 
 	@Override
-	public DataResult<User> getByUserId(int id) {
-		return new SuccessDataResult<User>(this.userDao.findById(id),"data listelendi");
+	public DataResult<UserDto> getByUserId(int id) {
+		User user = userDao.findById(id);
+		UserDto userDto = convertToUserDto(user);
+
+		return new SuccessDataResult<UserDto>(userDto, "data listelendi");
 	}
 
 	@Override
@@ -76,11 +78,32 @@ public class UserManager implements UserService {
 		userDao.deleteById(id);
 		return new SuccessResult("silme başarılı");
 	}
-	
 
+	private UserDto convertToUserDto(User user) {
+		UserDto userdto = new UserDto();
+		userdto.setId(user.getId());
+		userdto.setName(user.getName());
+		userdto.setEmailAddress(user.getEmailAddress());
+		userdto.setPassword(user.getPassword());
+		userdto.setTitle(user.getTitle());
+		return userdto;
+	}
 
+	private User convertToUser(UserDto userDto) {
+		User user = new User();
+		user.setEmailAddress(userDto.getEmailAddress());
+		user.setId(userDto.getId());
+		user.setName(userDto.getName());
+		user.setPassword(userDto.getPassword());
+		user.setTitle(userDto.getTitle());
+		return user;
+	}
 
-
-	
+	private User convertToUser(Verification verification) {
+		User user = new User();
+		user.setEmailAddress(verification.getEmailAddress());
+		user.setPassword(verification.getPassword());
+		return user;
+	}
 
 }

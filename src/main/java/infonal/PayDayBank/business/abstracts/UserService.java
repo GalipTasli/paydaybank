@@ -4,14 +4,15 @@ import java.util.List;
 
 import infonal.PayDayBank.core.utilitis.results.DataResult;
 import infonal.PayDayBank.core.utilitis.results.Result;
-import infonal.PayDayBank.entities.concretes.User;
+import infonal.PayDayBank.entities.dtos.UserDto;
+import infonal.PayDayBank.entities.dtos.Verification;
 
 public interface UserService {
-	DataResult<List<User>> getall();
-	DataResult<User> getByUserId(int id);
-	Result add (User user);
-	Result verificationEmailandPassword(String email,String password);
-	Result updateUser( User user);
+	DataResult< List<UserDto>>  getall();
+	DataResult<UserDto> getByUserId(int id);
+	Result add (UserDto userDto);
+	Result verificationEmailandPassword(Verification verification);
+	Result updateUser( UserDto userDto);
 	Result delete(int id);
 
 }

@@ -14,10 +14,10 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="product_id")
-	private int puroductId;
+	private int id;
 	
 	@Column(name="product_name")
-	private String productName;
+	private String name;
 	
 	@Column(name="product_price")
 	private int price ;
@@ -34,23 +34,23 @@ public class Product {
 	
 	public Product(int id, String name, int price, Boolean available, String description) {
 		super();
-		this.puroductId = id;
-		this.productName = name;
+		this.id = id;
+		this.name = name;
 		this.price = price;
 		this.available = available;
 		this.description = description;
 	}
 	public int getId() {
-		return puroductId;
+		return id;
 	}
 	public void setId(int id) {
-		this.puroductId = id;
+		this.id = id;
 	}
 	public String getName() {
-		return productName;
+		return name;
 	}
 	public void setName(String name) {
-		this.productName = name;
+		this.name = name;
 	}
 	public int getPrice() {
 		return price;

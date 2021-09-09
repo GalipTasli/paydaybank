@@ -1,6 +1,8 @@
 package infonal.PayDayBank.business.concretes;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +14,13 @@ import infonal.PayDayBank.core.utilitis.results.SuccessDataResult;
 import infonal.PayDayBank.core.utilitis.results.SuccessResult;
 import infonal.PayDayBank.dataAccess.abstracts.ProductDao;
 import infonal.PayDayBank.entities.concretes.Product;
+import infonal.PayDayBank.entities.dtos.ProductDto;
 
 @Service
 public class ProductManager implements ProductService {
 
 	private ProductDao productDao;
+	
 
 	@Autowired
 	public ProductManager(ProductDao productDao) {
@@ -25,31 +29,36 @@ public class ProductManager implements ProductService {
 	}
 	
 	@Override
-	public DataResult<List<Product>> getall() {
-		
-		return new SuccessDataResult<List<Product>>(this.productDao.findAll());
+	public DataResult<List<ProductDto>> getall() {
+		List<ProductDto> productDtos= ((List<Product> )productDao
+				.findAll())
+				.stream()
+				.map(this::convertToProductDto)
+					.collect(Collectors.toList());
+		return new SuccessDataResult<List<ProductDto>>(productDtos,"data listelendi");
 	}
 	
 	@Override
-	public Result add(Product product) {
+	public Result add(ProductDto productDto) {
 		
-		 this.productDao.save(product);
+		 this.productDao.save(convertToProduct(productDto));
 		 return new SuccessResult("ürün eklendi");
 	}
 	
 	@Override
-	public Result updateProduct(Product product) {
+	public Result updateProduct(ProductDto productDto) {
 		
-			productDao.deleteById(product.getId());
-			productDao.save(product);
+			productDao.deleteById(convertToProduct(productDto).getId());
+			productDao.save(convertToProduct(productDto));
 			return new SuccessResult("günceleme başarılı");
 		
 	}
 	
 	@Override
-	public DataResult<Product> getByProductId(int productId) {
-		return new SuccessDataResult<Product>
-		(this.productDao.findById(productId),"Data listelendi");	
+	public DataResult<ProductDto> getByProductId(int id) {
+		Product product = productDao.findById(id);
+		ProductDto productDto = convertToProductDto(product);
+		return new SuccessDataResult<ProductDto>(productDto,"data listelendi");
 	}
 
 	@Override
@@ -58,5 +67,25 @@ public class ProductManager implements ProductService {
 		productDao.deleteById(id);
 		return new SuccessResult("silme başarılı");
 	}
+	private ProductDto convertToProductDto(Product product)
+	{
+		ProductDto productDto = new ProductDto();
+		productDto.setId(product.getId());
+		productDto.setName(product.getName());
+		productDto.setPrice(product.getPrice());
+		productDto.setDescription(product.getDescription());
+		productDto.setAvailable(product.getAvailable());
+		return productDto;
+	}
+	private Product convertToProduct(ProductDto productDto) {
+		Product product = new Product();
+		product.setId(productDto.getId());
+		product.setName(productDto.getName());
+		product.setPrice(productDto.getPrice());
+		product.setDescription(productDto.getDescription());
+		product.setAvailable(productDto.getAvailable());
+		return product;
+	}
+	
 
 }

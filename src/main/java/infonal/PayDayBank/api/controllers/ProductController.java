@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import infonal.PayDayBank.business.abstracts.ProductService;
 import infonal.PayDayBank.core.utilitis.results.DataResult;
 import infonal.PayDayBank.core.utilitis.results.Result;
-import infonal.PayDayBank.entities.concretes.Product;
+import infonal.PayDayBank.entities.dtos.ProductDto;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
@@ -39,22 +39,22 @@ public class ProductController {
 
 
 	@GetMapping("/getall")
-	public DataResult<List<Product>> getAll(){
+	public DataResult<List<ProductDto>> getAll(){
 		return this.productService.getall();
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody Product product) {
-		return this.productService.add(product);
+	public Result add(@RequestBody ProductDto productDto) {
+		return this.productService.add(productDto);
 	}
 	
 	@PutMapping("/update")
-	public Result updateProduct(@RequestBody Product product){
-		return this.productService.updateProduct(product);
+	public Result updateProduct(@RequestBody ProductDto productDto){
+		return this.productService.updateProduct(productDto);
 	}
 	
 	@GetMapping("/getByProducId")
-	public DataResult<Product> getByProductId(@RequestParam int productId){
+	public DataResult<ProductDto > getByProductId(@RequestParam int productId){
 		return this.productService.getByProductId(productId);
 	}
 	@DeleteMapping("/delete")

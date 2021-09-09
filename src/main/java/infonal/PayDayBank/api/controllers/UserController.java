@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import infonal.PayDayBank.business.abstracts.UserService;
 import infonal.PayDayBank.core.utilitis.results.DataResult;
 import infonal.PayDayBank.core.utilitis.results.Result;
-import infonal.PayDayBank.entities.concretes.User;
+import infonal.PayDayBank.entities.dtos.UserDto;
+import infonal.PayDayBank.entities.dtos.Verification;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 
@@ -35,32 +36,31 @@ public class UserController {
 	}
 
 	@GetMapping("/getall")
-	public DataResult<List<User>>getAll(){
+	public DataResult< List<UserDto>> getAll(){
 		return this.userService.getall();
 	}
 	@GetMapping("/getByUserId")
-	public DataResult<User> getByUyserId(@RequestParam int id)
+	public DataResult<UserDto> getByUyserId(@RequestParam int id)
 	{
 		return this.userService.getByUserId(id);
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody  User user) {
-		return this.userService.add(user); 
+	public Result add(@RequestBody  UserDto userDto) {
+		return this.userService.add(userDto); 
 		
 	}
 	
 	@PutMapping("/update")
-	public Result updateUser(@RequestBody User user){
-		return this.userService.updateUser(user);
+	public Result updateUser(@RequestBody UserDto userDto){
+		return this.userService.updateUser(userDto);
 	}
 	
 	@PutMapping("/verify")
-	public Result verificationEmailandPassword(@RequestBody User user)
+	public Result verificationEmailandPassword(@RequestBody Verification verification)
 	{
-		String email= user.getEmailAddress();
-		String password= user.getPassword();
-		return this.userService.verificationEmailandPassword(email,password);
+		
+		return this.userService.verificationEmailandPassword(verification);
 	
 	
 	}
