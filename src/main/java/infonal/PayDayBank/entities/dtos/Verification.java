@@ -1,5 +1,5 @@
 package infonal.PayDayBank.entities.dtos;
-
+//email ve şirfre doğrulamalarını yapmak için kullanacağımı dto nesnesi
 public class Verification {
 	private String emailAddress;
 

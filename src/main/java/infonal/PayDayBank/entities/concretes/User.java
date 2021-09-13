@@ -1,5 +1,5 @@
 package infonal.PayDayBank.entities.concretes;
-
+//entiti nesnelerini database ile ilişkilendirip işlemlerimize devam ediyoruz
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

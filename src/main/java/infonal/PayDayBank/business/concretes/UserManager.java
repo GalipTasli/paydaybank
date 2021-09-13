@@ -52,7 +52,7 @@ public class UserManager implements UserService {
 		return new SuccessResult("günceleme başarıı");
 
 	}
-
+//  istemciye göndereceğiniz verilerin şeklini değiştirmek isteyebilirsiniz burdada mail ve şifre sorgulmasını  yapmak için değişkenlerimizi verification türünden işleme sokuyoruz.
 	@Override
 	public Result verificationEmailandPassword(Verification verification) {
 
@@ -78,7 +78,7 @@ public class UserManager implements UserService {
 		userDao.deleteById(id);
 		return new SuccessResult("silme başarılı");
 	}
-
+	//user değişkenide gelen verileri userdto değişkenine çeviren method.
 	private UserDto convertToUserDto(User user) {
 		UserDto userdto = new UserDto();
 		userdto.setId(user.getId());
@@ -88,7 +88,7 @@ public class UserManager implements UserService {
 		userdto.setTitle(user.getTitle());
 		return userdto;
 	}
-
+	//userdto değişkenide gelen verileri user değişkenine çeviren method.
 	private User convertToUser(UserDto userDto) {
 		User user = new User();
 		user.setEmailAddress(userDto.getEmailAddress());
@@ -98,7 +98,7 @@ public class UserManager implements UserService {
 		user.setTitle(userDto.getTitle());
 		return user;
 	}
-
+	//verification değişkininde gelen verileri user değişkenine çeviren method.
 	private User convertToUser(Verification verification) {
 		User user = new User();
 		user.setEmailAddress(verification.getEmailAddress());

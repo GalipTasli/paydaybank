@@ -67,6 +67,7 @@ public class ProductManager implements ProductService {
 		productDao.deleteById(id);
 		return new SuccessResult("silme başarılı");
 	}
+	//produt değişkenide gelen verileri productdto değişkenine çeviren method.
 	private ProductDto convertToProductDto(Product product)
 	{
 		ProductDto productDto = new ProductDto();
@@ -77,6 +78,7 @@ public class ProductManager implements ProductService {
 		productDto.setAvailable(product.getAvailable());
 		return productDto;
 	}
+	//produtdto değişkenide gelen verileri product değişkenine çeviren method.
 	private Product convertToProduct(ProductDto productDto) {
 		Product product = new Product();
 		product.setId(productDto.getId());
