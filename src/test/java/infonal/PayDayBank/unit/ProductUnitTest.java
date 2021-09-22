@@ -17,13 +17,14 @@ public class ProductUnitTest {
 	{
 		 final var productDao = Mockito.mock(ProductDao.class);
 		    final var productManager = new ProductManager(productDao);
+		    // Yeni bir entity üretelim
 		    final var expectedResult = new Product(138,"bilgisayar",7000,true,"500gb ssd intel");
 		    Mockito.doReturn(expectedResult)
 		        .when(productDao)
 		        .save(Mockito.any(Product.class));
-
+		    //getbyıd den gelen bilgileri alalım
 		    final var actualResult = productManager.getByProductId(138);
-
+		    // Şimdi ise gelen entity'deki content'in eşitliğini kontrol edelim	
 		    assertSame(expectedResult, actualResult);
 	}
 	
@@ -32,13 +33,14 @@ public class ProductUnitTest {
 	{
 		final var productDao = Mockito.mock(ProductDao.class);
 		final var productManager = new ProductManager(productDao);
+		 // Yeni bir entity üretelim
 		final var expectedResult = new  Product();
 	    Mockito.doReturn(expectedResult)
         .when(productDao)
         .save(Mockito.any(Product.class));
-
+	  //getall den gelen bilgileri alalım
     final var actualResult = productManager.getall();
-
+    // Şimdi ise gelen entity'deki content'in eşitliğini kontrol edelim	
     assertSame(expectedResult, actualResult);
 	}
 	
