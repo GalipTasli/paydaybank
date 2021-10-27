@@ -1,6 +1,7 @@
 # paydaybank
 İnfonal 2021 yaz stajı projesi java backend bölümü.
 ## Package.Entities.Concretes
+
 ![Ekran Alıntısı](https://user-images.githubusercontent.com/59477693/133037656-76f29873-7f28-4931-adb3-f3444db5956b.PNG)
 
 Veri tabanındaki tablolara ve verilere ulaşabilmek için isimlendirme kurallarına dikkat ederek Entity(varlık) sınıflarımı oluşturdum. Spring Boot anotasyonları ile tabloları ilgili sınıflar ile kolonları da ilgili alanlar(fields) ile ilişkilendirdim
